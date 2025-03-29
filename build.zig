@@ -5,18 +5,6 @@ pub fn build(b: *std.Build) void {
 
     const optimize = b.standardOptimizeOption(.{});
 
-    const lib_mod = b.createModule(.{
-
-        .root_source_file = b.path("src/root.zig"),
-        .target = target,
-        .optimize = optimize,
-    });
-    const lib_mod2 = b.createModule(.{
-
-        .root_source_file = b.path("src/test1.zig"),
-                                   .target = target,
-                                   .optimize = optimize,
-    });
 
     const exe_mod = b.createModule(.{
 
@@ -26,17 +14,7 @@ pub fn build(b: *std.Build) void {
     });
 
 
-    exe_mod.addImport("zig1_lib", lib_mod);
-    exe_mod.addImport("zig2_lib", lib_mod2);
-
-    const lib = b.addLibrary(.{
-        .linkage = .static,
-        .name = "zig1",
-        .root_module = lib_mod,
-    });
-
-
-    b.installArtifact(lib);
+  
 
 
     const exe = b.addExecutable(.{
